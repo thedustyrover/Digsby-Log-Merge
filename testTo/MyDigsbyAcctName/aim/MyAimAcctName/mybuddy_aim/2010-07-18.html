@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+      <TITLE>IM Logs with mybuddy on 2010-07-18</TITLE>
+   <style>
+     .buddy { font-weight: bold; }
+     .buddy:after { content: ":" }
+
+     .time {
+        color: #a0a0a0;
+        font-family: monaco, courier new, monospace;
+        font-size: 75%;
+     }
+     .time:hover { color: black; }
+
+     .outgoing { background-color: #efefef; }
+     .incoming { background-color: #ffffff; }
+   </style>
+   <script type="text/javascript">
+//<![CDATA[
+    function convert_time(datetime){
+        var dt = datetime.split(" ");
+        var date = dt[0].split("-");
+        var time = dt[1].split(":");
+        var t = new Date;
+        t.setUTCFullYear(date[0],date[1]-1,date[2]);
+        t.setUTCHours(time[0],time[1],time[2]);
+        return t.toLocaleTimeString();
+    }
+
+    function utc_to_local(){
+        var node;
+        for (var i=0; i<document.body.childNodes.length; i++){
+            node = document.body.childNodes[i];
+            if(node.nodeType == 1 && node.className.match("message")){
+                var showtime = convert_time(node.getAttribute('timestamp'));
+                var newspan = '<span class="time">(' + showtime + ') </span>';
+                var msgnode = node;
+                msgnode.innerHTML = newspan + msgnode.innerHTML;
+            }
+        }
+    }
+//]]>
+   </script>
+   </HEAD>
+   <BODY onload="utc_to_local()">
+<div class="outgoing message" auto="False" timestamp="2010-07-18 20:38:23"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">"The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who in the name of charity and good will shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who attempt to poison and destroy my brothers. And you will know my name is the Lord when I lay my vengeance upon thee."</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 23:34:55"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">what.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 23:34:55"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">tl;dr man</font></span></div>

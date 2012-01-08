@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+      <TITLE>IM Logs with mybuddy on 2010-07-18</TITLE>
+   <style>
+     .buddy { font-weight: bold; }
+     .buddy:after { content: ":" }
+
+     .time {
+        color: #a0a0a0;
+        font-family: monaco, courier new, monospace;
+        font-size: 75%;
+     }
+     .time:hover { color: black; }
+
+     .outgoing { background-color: #efefef; }
+     .incoming { background-color: #ffffff; }
+   </style>
+   <script type="text/javascript">
+//<![CDATA[
+    function convert_time(datetime){
+        var dt = datetime.split(" ");
+        var date = dt[0].split("-");
+        var time = dt[1].split(":");
+        var t = new Date;
+        t.setUTCFullYear(date[0],date[1]-1,date[2]);
+        t.setUTCHours(time[0],time[1],time[2]);
+        return t.toLocaleTimeString();
+    }
+
+    function utc_to_local(){
+        var node;
+        for (var i=0; i<document.body.childNodes.length; i++){
+            node = document.body.childNodes[i];
+            if(node.nodeType == 1 && node.className.match("message")){
+                var showtime = convert_time(node.getAttribute('timestamp'));
+                var newspan = '<span class="time">(' + showtime + ') </span>';
+                var msgnode = node;
+                msgnode.innerHTML = newspan + msgnode.innerHTML;
+            }
+        }
+    }
+//]]>
+   </script>
+   </HEAD>
+   <BODY onload="utc_to_local()">
+<div class="outgoing message" auto="False" timestamp="2010-07-18 17:38:05"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Okay, now, tell me about the hash bars.</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:34:55"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">So what you want to know?</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:34:57"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Well, hash is legal there, right?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:35:01"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">Yeah, it's legal, but it ain't a hundred percent legal.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:35:29"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">I mean, you can't walk into a restaurant, roll a joint, and start puffin' away.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:36:18"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">They want you to smoke in your home or certain designated places.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:36:26"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Those are hash bars?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:36:43"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">Breaks down like this, okay:</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:36:47"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">it's legal to buy it</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:05"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">it's legal to own it</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:23"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">and if you're the proprietor of a hash bar</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:25"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">it's legal to sell it</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:30"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">It's illegal to carry it, but that doesn't really matter</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:41"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">'cause get a load of this, all right:</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:47"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">if you get stopped by the cops in Amsterdam, it's <em>illegal</em> for them to search you</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:37:49"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">I mean, that's a right the cops in Amsterdam don't have.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:37:56"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Oh, man</span></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:38:03"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">I'm going</span></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:38:11"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">that's all there is to it.</span></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:38:23"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">I'm fucking going.</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:38:32"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">Yeah, baby, you'd dig it the most</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:39:37"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">But you know what the funniest thing about Europe is?</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:39:39"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">What?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:39:43"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">It's the little differences.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:39:47"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">I mean, they got the same shit over there that we got here, but it's just...</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:39:51"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">it's just there it's a little different.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:39:54"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Example?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:39:58"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">All right. Well, you can walk into a movie theater in Amsterdam and buy a beer.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:40:01"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">And I don't mean just like in no paper cup</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:41:53"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">I'm talking about a glass of beer</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:41:55"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">And in Paris, you can buy a beer at McDonald's.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:41:59"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">And you know what they call a Quarter Pounder with Cheese in Paris?</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:42:09"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">They don't call it a Quarter Pounder with Cheese?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:44:01"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">Nah, man, they got the metric system.</font></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:44:13"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">They wouldn't know what the fuck a Quarter Pounder is.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:44:22"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">What do they call it?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:44:34"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">They call it a Royale with Cheese.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:44:37"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Royale with Cheese =]</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:44:52"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">That's right.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:44:57"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">What do they call a Big Mac?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:45:45"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">A Big Mac's a Big Mac, but they call it <em>Le</em> Big Mac.</font></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:45:51"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">Le Big Mac XD</span></span></div>
+<div class="outgoing message" auto="False" timestamp="2010-07-18 18:48:36"><span class="buddy">MyAimAcctName</span> <span class="msgcontent"><span style="font-family: arial; font-size: 10pt; color: #000000;">What do they call a Whopper?</span></span></div>
+<div class="incoming message" auto="False" timestamp="2010-07-18 18:48:43"><span class="buddy">mybuddy</span> <span class="msgcontent"><font face="Trebuchet MS" size="2" color="#3229a0">I don't know, I didn't go in a Burger King.</font></span></div>
