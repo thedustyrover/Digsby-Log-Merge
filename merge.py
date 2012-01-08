@@ -68,6 +68,7 @@ def mergeLogs(fromFilePath, toFilePath, outputFilePath):
             except ElementTree.ParseError:
                 print("XML Parse Error of message in toFile " + toFilePath + " line " + str(toCount))
                 print("line:" + toLine)
+                input("Press Enter to close")
                 sys.exit(1)
                 
             toMsgTime = toMsgXml.attrib['timestamp']
@@ -83,6 +84,7 @@ def mergeLogs(fromFilePath, toFilePath, outputFilePath):
                     except ElementTree.ParseError:
                         print("XML Parse Error of message in fromFile " + fromFilePath + " line " + str(fromCount))
                         print("line:" + currentFromLine)
+                        input("Press Enter to close")
                         sys.exit(1)
                     
                     fromMsgTime = fromMsgXml.attrib['timestamp']
@@ -134,6 +136,7 @@ if (len(sys.argv) >= 4): #first arg is from dir
 #Dive through fromLogsDir to find all log files
 if not os.path.exists(fromLogsDir):
     print("fromLogsDir "+fromLogsDir+" does not exist!")
+    input("Press Enter to close")
     sys.exit(1)
 else:
     fileCount = 0
@@ -146,10 +149,10 @@ else:
             commonPath = os.path.relpath(fromFilePath,fromLogsDir)
             matchingToFilePath = os.path.join(toLogsDir,commonPath)
             matchingOutputFilePath = os.path.join(outputLogsDir,commonPath)
-            if os.path.exists(matchingToFilePath):
-                if not os.path.exists(os.path.dirname(matchingOutputFilePath)): #Make the output directory if needed
+            if not os.path.exists(os.path.dirname(matchingOutputFilePath)): #Make the output directory if needed
                     os.makedirs(os.path.dirname(matchingOutputFilePath))
-                
+			
+            if os.path.exists(matchingToFilePath):                
                 mergeLogs(fromFilePath,matchingToFilePath,matchingOutputFilePath)
                 print("Merged " + commonPath)
                 fileCount+=1
