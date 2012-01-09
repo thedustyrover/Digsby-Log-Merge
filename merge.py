@@ -1,5 +1,7 @@
 import sys
 import os
+import time
+import codecs
 import xml.etree.ElementTree as ElementTree
 import shutil
 
@@ -19,30 +21,75 @@ def sanitizePotentialMsgToXml(string):
 # 4. the class attribute is space-separated elements, and contains "message" as one of the elements
 #
 # If things break, it's a good idea to look here to see if Digsby changed their log format
-def isMessageLine(line):
+def getMessageElementFromCompleteLine(line):
 
     sanitizedLine = sanitizePotentialMsgToXml(line)
     
     try:
         xml = ElementTree.fromstring(sanitizedLine)
         if 'timestamp' not in xml.attrib:
-            return False
+            return None
         if 'class' in xml.attrib:
             classes = xml.attrib['class'].split(' ')
             if 'message' in classes:
-                return True
+                return xml
     except ElementTree.ParseError:
-        return False
+        return None
 
-    return False
+    return None
+
+def getMessageElementFromAtLeastPartialLine(line):
+    firstParenIndex = line.find('<')
+    if (firstParenIndex < 0):
+        return None
+    secondParenIndex = line.find('>',firstParenIndex+1)
+    if (secondParenIndex < 0):
+        return None
+
+    firstElementStr = line[firstParenIndex:secondParenIndex+1]  + '</div>'
+    try:
+        firstElementXml = ElementTree.fromstring(firstElementStr)
+        if 'timestamp' not in firstElementXml.attrib:
+            return None
+        if 'class' in firstElementXml.attrib:
+            classes = firstElementXml.attrib['class'].split(' ')
+            if 'message' in classes:
+                return firstElementXml
+    except ElementTree.ParseError:
+        return None
+
+    return None
+
+def isCompleteMessageLine(line):
+    msg = getMessageElementFromCompleteLine(line)
+    if (msg == None):
+        return False
+    else:
+        return True
+
+def isAtLeastBeginningOfMessageLine(line):
+    msg = getMessageElementFromAtLeastPartialLine(line)
+    if (msg == None):
+        return False
+    else:
+        return True
+
+def getMessageLine(line):
+    msg = None;
+    msg = getMessageElementFromCompleteLine(line)
+    if (msg == None):
+        msg = getMessageElementFromAtLeastPartialLine(line)
+
+    return msg
+
 
 #Given a log file at fromFilePath and toFilePath, creates a merged file at outputFilePath
 #A merged file is a copy of the toFile, with any messages in the fromFile inserted among
 #the messages of the toFile in a time-ordered fashion
 def mergeLogs(fromFilePath, toFilePath, outputFilePath):
-    fromFile = open(fromFilePath, 'r')
-    toFile = open(toFilePath, 'r')
-    outputFile = open(outputFilePath, 'w')
+    fromFile = codecs.open(fromFilePath, 'r','utf-8')
+    toFile = codecs.open(toFilePath, 'r','utf-8')
+    outputFile = codecs.open(outputFilePath, 'w','utf-8')
 
     #Loop through the toFile, writing each of its lines to the output file
     #We'll check the fromFile and insert its message lines in between
@@ -53,57 +100,44 @@ def mergeLogs(fromFilePath, toFilePath, outputFilePath):
     toCount = 1
     fromCount = 1
     for toLine in toFile:
-        #No special processing if we haven't reached the message section,
-        #or if it's the newline at the end of the message section
-        if insideToMessageSectionFlag or isMessageLine(toLine):
-            insideToMessageSectionFlag = True
 
-            #the only non-message in the message section is the trailing newline
-            if (toLine == '\n'):
-                outputFile.write(toLine)
-                toCount+=1
+        #Do a check to see if we've reached the message section
+        if not insideToMessageSectionFlag:
+            if isAtLeastBeginningOfMessageLine(toLine):
+                insideToMessageSectionFlag = True
                 
-            try:
-                toMsgXml = ElementTree.fromstring(sanitizePotentialMsgToXml(toLine))
-            except ElementTree.ParseError:
-                print("XML Parse Error of message in toFile " + toFilePath + " line " + str(toCount))
-                print("line:" + toLine)
-                input("Press Enter to close")
-                sys.exit(1)
+        if insideToMessageSectionFlag:
+            toMsgXml = getMessageLine(toLine)
+            if (toMsgXml != None): #This is at least the beginning of a message,
+                #write any messages from fromFile that comes before this message
+                toMsgTime = time.strptime(toMsgXml.attrib['timestamp'],'%Y-%m-%d %H:%M:%S')
                 
-            toMsgTime = toMsgXml.attrib['timestamp']
+                while (currentFromLine != ''):                    
+                    if not insideFromMessageSectionFlag:
+                        if isAtLeastBeginningOfMessageLine(currentFromLine):
+                            insideFromMessageSectionFlag = True
 
-            # write any msg from fromFile that comes before this msg
-            while (currentFromLine != ''):
-                if insideFromMessageSectionFlag or isMessageLine(currentFromLine):
-                    insideFromMessageSectionFlag = True
+                    if insideFromMessageSectionFlag:
+                        fromMsgXml = getMessageLine(currentFromLine)
+                        if (fromMsgXml != None): #This is at least the beginning of a fromMessage,
+                            fromMsgTime = time.strptime(fromMsgXml.attrib['timestamp'],'%Y-%m-%d %H:%M:%S')
                     
-                    try:
-                        fromMsgXml = ElementTree.fromstring(sanitizePotentialMsgToXml(currentFromLine))
-                        
-                    except ElementTree.ParseError:
-                        print("XML Parse Error of message in fromFile " + fromFilePath + " line " + str(fromCount))
-                        print("line:" + currentFromLine)
-                        input("Press Enter to close")
-                        sys.exit(1)
-                    
-                    fromMsgTime = fromMsgXml.attrib['timestamp']
-                    
-                    #Compare fromMsg time to current toMsg
-                    #Write the line if it occurs before
-                    if (fromMsgTime < toMsgTime):
+                            #Compare fromMsg time to current toMsg
+                            #Stop writing if the fromLine occurs after
+                            if (fromMsgTime >= toMsgTime):
+                                break
+
                         outputFile.write(currentFromLine)
-                    else:
-                        break
-
-                #Read the next line from the fromFile
-                #We get here if the currentFromLine:
-                # A) is not a message, or
-                # B) does not occur before the toMsg
-                #We leave it unchanged if it is a message and happens after toMsg,
-                #so that it can be used to compare against the next toMsg
-                currentFromLine = fromFile.readline()
-                fromCount+=1
+                    
+                    #Read the next line from the fromFile. We get here if the currentFromLine:
+                    # A) is not a message, or
+                    # B) does not occur before the toMsg
+                    #We leave it unchanged if it is a message and happens after toMsg,
+                    #so that it can be used to compare against the next toMsg
+                    currentFromLine = fromFile.readline()
+                    fromCount+=1
+            else: #This is a line that is inside the message section, but not the start of a message. Just write it.
+                pass
 
         #All lines from the toFile are written
         outputFile.write(toLine)
@@ -111,9 +145,7 @@ def mergeLogs(fromFilePath, toFilePath, outputFilePath):
 
     #Write any remaining messages from the fromFile
     while (currentFromLine != ''):
-        if isMessageLine(currentFromLine):
-            outputFile.write(currentFromLine)
-
+        outputFile.write(currentFromLine)
         currentFromLine = fromFile.readline()
 
     fromFile.close()
